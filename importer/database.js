@@ -1,4 +1,3 @@
-//import pg from 'pg';
 import config from './config.js';
 import sql from 'mssql';
 
@@ -22,3 +21,5 @@ export default class Database {
     }
   }
 }
+
+export { poolPromise };
