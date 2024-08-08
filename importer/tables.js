@@ -39,6 +39,7 @@ export async function createTables() {
       CREATE TABLE writer (
         tconst VARCHAR(255),
         nconst VARCHAR(255),
+        PRIMARY KEY (tconst, nconst),
         FOREIGN KEY (tconst) REFERENCES movie(tconst),
         FOREIGN KEY (nconst) REFERENCES person(nconst)
       );
@@ -46,6 +47,7 @@ export async function createTables() {
       CREATE TABLE director (
         tconst VARCHAR(255),
         nconst VARCHAR(255),
+        PRIMARY KEY (tconst, nconst),
         FOREIGN KEY (tconst) REFERENCES movie(tconst),
         FOREIGN KEY (nconst) REFERENCES person(nconst)
       );
@@ -62,14 +64,15 @@ export async function createTables() {
       );
 
       CREATE TABLE character (
-        characterId VARCHAR(255) PRIMARY KEY,
+        characterId INT IDENTITY(1,1) PRIMARY KEY,
         characterName VARCHAR(255)
       );
 
       CREATE TABLE principalCharacter (
         tconst VARCHAR(255),
         ordering INT,
-        characterId VARCHAR(255),
+        characterId INT,
+        PRIMARY KEY (tconst, ordering, characterId),
         FOREIGN KEY (tconst, ordering) REFERENCES principal(tconst, ordering),
         FOREIGN KEY (characterId) REFERENCES character(characterId)
       );
@@ -77,18 +80,20 @@ export async function createTables() {
       CREATE TABLE knownFor (
         nconst VARCHAR(255),
         tconst VARCHAR(255),
+        PRIMARY KEY (nconst, tconst),
         FOREIGN KEY (nconst) REFERENCES person(nconst),
         FOREIGN KEY (tconst) REFERENCES movie(tconst)
       );
 
       CREATE TABLE profession (
-        professionId VARCHAR(255) PRIMARY KEY,
-        professionName VARCHAR(255)
+        professionId INT IDENTITY(1,1) PRIMARY KEY,
+        professionName VARCHAR(255) UNIQUE
       );
 
       CREATE TABLE personProfession (
         nconst VARCHAR(255),
-        professionId VARCHAR(255),
+        professionId INT,
+        PRIMARY KEY (nconst, professionId),
         FOREIGN KEY (nconst) REFERENCES person(nconst),
         FOREIGN KEY (professionId) REFERENCES profession(professionId)
       );
