@@ -15,9 +15,6 @@ export async function populateGenreTables() {
       const pool = await poolPromise;
       const filePath = path.join(dataDir, 'title.basics.tsv');
   
-       await pool.request().query(`IF NOT EXISTS (SELECT name FROM sysindexes WHERE name = 'idx_genreName')
-         CREATE INDEX idx_genreName ON genre (genreName);`);
-      
       // Read stream
       const fileStream = fs.createReadStream(filePath, { encoding: 'utf8' });
   
@@ -128,16 +125,12 @@ async function insertBatch(pool, batch) {
         const result = await pool.request().query(`SELECT genreId FROM genre WHERE genreName='${genre}'`);
         if (result.recordset.length > 0) {
           const genreId = result.recordset[0].genreId;
-          console.log(`Adding to movieGenreTable: tconst = ${row.tconst}, genreId = ${genreId}`);
           movieGenreTable.rows.add(row.tconst, genreId);
         } else {
           console.error(`Genre ${genre} not found in database`);
         }
       }
     }
-
-    console.log(`Final movieGenreTable rows: ${movieGenreTable.rows.length}`);
-    console.log(`movieGenreTable structure: ${JSON.stringify(movieGenreTable)}`);
     
     try {
       const request = pool.request();

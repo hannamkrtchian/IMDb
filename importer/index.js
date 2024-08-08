@@ -5,6 +5,8 @@ import { populatePersonTable } from './populate/populatePerson.js';
 import { populateMovieTable } from './populate/populateMovie.js';
 import { populateGenreTables } from './populate/populateGenre.js';
 import { populateProfessionTables } from './populate/populateProfession.js';
+import { populateKnownForTable } from './populate/populateKnownFor.js';
+import { populateCrewTable } from './populate/populateCrew.js';
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -79,6 +81,24 @@ app.get('/populate-genre-table', async (req, res) => {
 app.get('/populate-profession-table', async (req, res) => {
   try {
     const result = await populateProfessionTables();
+    res.send(result);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+app.get('/populate-knownFor-table', async (req, res) => {
+  try {
+    const result = await populateKnownForTable();
+    res.send(result);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+app.get('/populate-crew-table', async (req, res) => {
+  try {
+    const result = await populateCrewTable();
     res.send(result);
   } catch (error) {
     res.status(500).send(error.message);

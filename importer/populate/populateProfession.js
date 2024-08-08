@@ -15,9 +15,6 @@ export async function populateProfessionTables() {
       const pool = await poolPromise;
       const filePath = path.join(dataDir, 'name.basics.tsv');
   
-      //  await pool.request().query(`IF NOT EXISTS (SELECT name FROM sysindexes WHERE name = 'idx_professionName')
-      //    CREATE INDEX idx_professionName ON profession (professionName);`);
-      
       // Read stream
       const fileStream = fs.createReadStream(filePath, { encoding: 'utf8' });
   
@@ -128,7 +125,6 @@ async function insertBatch(pool, batch) {
         const result = await pool.request().query(`SELECT professionId FROM profession WHERE professionName='${profession}'`);
         if (result.recordset.length > 0) {
           const professionId = result.recordset[0].professionId;
-          console.log(`Adding to personProfessionTable: nconst = ${row.nconst}, professionId = ${professionId}`);
           personProfessionTable.rows.add(row.nconst, professionId);
         } else {
           console.error(`profession ${profession} not found in database`);
@@ -136,8 +132,6 @@ async function insertBatch(pool, batch) {
       }
     }
 
-    console.log(`Final personProfessionTable rows: ${personProfessionTable.rows.length}`);
-    
     try {
       const request = pool.request();
       await request.bulk(personProfessionTable);
