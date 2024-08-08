@@ -19,7 +19,7 @@ export async function populateMovieTable() {
     // Read stream
     const fileStream = fs.createReadStream(filePath, { encoding: 'utf8' });
 
-    const batchSize = 100000;
+    const batchSize = 10000;
     let batch = [];
     let rowCount = 0;
 

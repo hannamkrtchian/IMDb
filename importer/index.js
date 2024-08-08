@@ -3,6 +3,7 @@ import Database from './database.js';
 import { createTables, deleteTables, getTables } from './tables.js';
 import { populatePersonTable } from './populate/populatePerson.js';
 import { populateMovieTable } from './populate/populateMovie.js';
+import { populateGenreTables } from './populate/populateGenre.js';
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -59,6 +60,15 @@ app.get('/populate-person-table', async (req, res) => {
 app.get('/populate-movie-table', async (req, res) => {
   try {
     const result = await populateMovieTable();
+    res.send(result);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+app.get('/populate-genre-table', async (req, res) => {
+  try {
+    const result = await populateGenreTables();
     res.send(result);
   } catch (error) {
     res.status(500).send(error.message);

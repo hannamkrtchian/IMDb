@@ -17,13 +17,14 @@ export async function createTables() {
       );
 
       CREATE TABLE genre (
-        genreId VARCHAR(255) PRIMARY KEY,
-        genreName VARCHAR(255)
+        genreId INT IDENTITY(1,1) PRIMARY KEY,
+        genreName VARCHAR(255) UNIQUE
       );
 
       CREATE TABLE movieGenre (
         tconst VARCHAR(255),
-        genreId VARCHAR(255),
+        genreId INT,
+        PRIMARY KEY (tconst, genreId),
         FOREIGN KEY (tconst) REFERENCES movie(tconst),
         FOREIGN KEY (genreId) REFERENCES genre(genreId)
       );
