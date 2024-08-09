@@ -64,7 +64,7 @@ export async function createTables() {
       );
 
       CREATE TABLE character (
-        characterId INT IDENTITY(1,1) PRIMARY KEY,
+        characterId INT PRIMARY KEY,
         characterName VARCHAR(255)
       );
 
@@ -109,10 +109,10 @@ export async function createTables() {
 }
 
 export async function deleteTables() {
-    try {
-      const pool = await poolPromise;
-  
-      const tableDeletionQuery = `
+  try {
+    const pool = await poolPromise;
+
+    const tableDeletionQuery = `
         DROP TABLE IF EXISTS movieGenre;
         DROP TABLE IF EXISTS writer;
         DROP TABLE IF EXISTS director;
@@ -126,30 +126,30 @@ export async function deleteTables() {
         DROP TABLE IF EXISTS person;
         DROP TABLE IF EXISTS profession;
       `;
-  
-      await pool.request().query(tableDeletionQuery);
-      console.log('Tables deleted successfully.');
-      return { message: 'Tables deleted successfully' };
-    } catch (error) {
-      console.error('Error deleting tables:', error);
-      throw error;
-    }
+
+    await pool.request().query(tableDeletionQuery);
+    console.log('Tables deleted successfully.');
+    return { message: 'Tables deleted successfully' };
+  } catch (error) {
+    console.error('Error deleting tables:', error);
+    throw error;
+  }
 }
 
 export async function getTables() {
-    try {
-      const pool = await poolPromise;
-  
-      const getTablesQuery = `
+  try {
+    const pool = await poolPromise;
+
+    const getTablesQuery = `
         SELECT TABLE_NAME
         FROM INFORMATION_SCHEMA.TABLES
         WHERE TABLE_TYPE = 'BASE TABLE'
       `;
-  
-      const result = await pool.request().query(getTablesQuery);
-      return result.recordset;
-    } catch (error) {
-      console.error('Error fetching table names:', error);
-      throw error;
-    }
+
+    const result = await pool.request().query(getTablesQuery);
+    return result.recordset;
+  } catch (error) {
+    console.error('Error fetching table names:', error);
+    throw error;
   }
+}
