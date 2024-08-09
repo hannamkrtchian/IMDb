@@ -9,6 +9,7 @@ import { populateKnownForTable } from './populate/populateKnownFor.js';
 import { populateCrewTable } from './populate/populateCrew.js';
 import { populatePrincipalTable } from './populate/populatePrincipals.js';
 import { populateCharacterTables } from './populate/populateCharacter.js';
+import { createIndexes } from './indexes.js';
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -23,6 +24,7 @@ app.get('/', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
 
 // TABLES
 app.get('/create-tables', async (req, res) => {
@@ -51,6 +53,7 @@ app.get('/get-tables', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
 
 // DATA
 app.get('/populate-person-table', async (req, res) => {
@@ -119,6 +122,17 @@ app.get('/populate-principal-table', async (req, res) => {
 app.get('/populate-character-table', async (req, res) => {
   try {
     const result = await populateCharacterTables();
+    res.send(result);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+
+// INDEXES
+app.get('/create-indexes', async (req, res) => {
+  try {
+    const result = await createIndexes();
     res.send(result);
   } catch (error) {
     res.status(500).send(error.message);

@@ -11,7 +11,8 @@ const config = {
         trustServerCertificate: true,
         connectTimeout: 30000
     },
-    port: 1433
+    port: 1433,
+    requestTimeout: 60000
 };
 
 export default config;
