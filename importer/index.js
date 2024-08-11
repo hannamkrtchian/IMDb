@@ -10,6 +10,8 @@ import { populateCrewTable } from './populate/populateCrew.js';
 import { populatePrincipalTable } from './populate/populatePrincipals.js';
 import { populateCharacterTables } from './populate/populateCharacter.js';
 import { createIndexes } from './indexes.js';
+import { createViews } from './views.js';
+import { createTrigger } from './triggers.js';
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -133,6 +135,28 @@ app.get('/populate-character-table', async (req, res) => {
 app.get('/create-indexes', async (req, res) => {
   try {
     const result = await createIndexes();
+    res.send(result);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+
+// VIEWS
+app.get('/create-views', async (req, res) => {
+  try {
+    const result = await createViews();
+    res.send(result);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+
+// TRIGGERS
+app.get('/create-triggers', async (req, res) => {
+  try {
+    const result = await createTrigger();
     res.send(result);
   } catch (error) {
     res.status(500).send(error.message);

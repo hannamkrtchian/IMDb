@@ -1,0 +1,1 @@
+SELECT * FROM [dbo].[PersonProfessionsView] WHERE nconst='nm0000003'

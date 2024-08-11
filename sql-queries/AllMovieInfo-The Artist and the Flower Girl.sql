@@ -1,0 +1,1 @@
+SELECT * FROM [dbo].[AllMovieInfoView] WHERE tconst='tt0000220';

@@ -1,0 +1,1 @@
+SELECT * FROM [dbo].[MovieDirectorsWriters] WHERE tconst='tt1375666';

@@ -97,6 +97,16 @@ export async function createTables() {
         FOREIGN KEY (nconst) REFERENCES person(nconst),
         FOREIGN KEY (professionId) REFERENCES profession(professionId)
       );
+
+      CREATE TABLE updatedMovies (
+        updateId INT IDENTITY(1,1) PRIMARY KEY,
+        tconst VARCHAR(255),
+        primaryTitle VARCHAR(255),
+        updatedColumn VARCHAR(255),
+        oldValue VARCHAR(255),
+        newValue VARCHAR(255),
+        updateTime DATETIME
+      );
     `;
 
     await pool.request().query(tableCreationQuery);
