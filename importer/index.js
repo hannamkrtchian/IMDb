@@ -1,17 +1,12 @@
 import express from 'express';
 import Database from './database.js';
 import { createTables, deleteTables, getTables } from './tables.js';
-import { populatePersonTable } from './populate/populatePerson.js';
-import { populateMovieTable } from './populate/populateMovie.js';
-import { populateGenreTables } from './populate/populateGenre.js';
-import { populateProfessionTables } from './populate/populateProfession.js';
-import { populateKnownForTable } from './populate/populateKnownFor.js';
-import { populateCrewTable } from './populate/populateCrew.js';
-import { populatePrincipalTable } from './populate/populatePrincipals.js';
-import { populateCharacterTables } from './populate/populateCharacter.js';
+import { populatePersonTable, populateMovieTable, populateGenreTables, populateProfessionTables, populateKnownForTable, populateCrewTable, populatePrincipalTable, populateCharacterTables } from './populate/index.js';
 import { createIndexes } from './indexes.js';
 import { createViews } from './views.js';
 import { createTrigger } from './triggers.js';
+import { createRoles } from './users/roles.js';
+import { createUsers } from './users/users.js';
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -162,6 +157,27 @@ app.get('/create-triggers', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
+
+// USERS
+app.get('/create-roles', async (req, res) => {
+  try {
+    const result = await createRoles();
+    res.send(result);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+app.get('/create-users', async (req, res) => {
+  try {
+    const result = await createUsers();
+    res.send(result);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
