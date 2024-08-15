@@ -8,7 +8,7 @@ const config = {
     database: process.env.DB_NAME,
     options: {
         encrypt: true,
-        trustServerCertificate: true,
+        trustServerCertificate: false,
         connectTimeout: 30000
     },
     port: 1433
@@ -21,7 +21,7 @@ export const masterConfig = {
     database: process.env.DB_NAME_SERVER,
     options: {
         encrypt: true,
-        trustServerCertificate: true,
+        trustServerCertificate: false,
         connectTimeout: 30000
     },
     port: 1433
