@@ -5,6 +5,10 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  tls:
+  - hosts:
+    - imdb.local
+    secretName: imdb-tls
   rules:
   - host: imdb.local
     http:
